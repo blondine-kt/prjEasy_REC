@@ -6,7 +6,7 @@ function Header() {
     <div
       className={`${styles.header_container} d-flex flex-row align-items-center`}
     >
-      <img src="../../assets/images/fv_icon.png" alt="FastVoiture icon" />
+      <img src="../../assets/images/prjEasy_RecLogo.png" alt="FastVoiture icon" />
 
       <div>
         <ul>
