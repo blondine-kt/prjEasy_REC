@@ -2,6 +2,9 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -24,9 +27,14 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);// Initialize Firebase Auth provider
 const analytics = getAnalytics(firebaseApp);
 const provider = new GoogleAuthProvider();
+const db = getFirestore(firebaseApp)
+// Initialize Cloud Storage and get a reference to the service
+const storage = getStorage(firebaseApp);
   
 // whenever a user interacts with the provider, we force them to select an account
 provider.setCustomParameters({   
     prompt : "select_account "
-});export const auth = getAuth();
+});
+export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export {db, storage}
