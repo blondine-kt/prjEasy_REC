@@ -1,4 +1,67 @@
-.candidateSignup{
-    background-image: var(--backgroundthemeStudent);
+.candidateSignup {
+  background-image: var(--backgroundthemeStudent);
+  letter-spacing: 0.3px;
+  font-size: 16px;
+}
 
+.registrationform {
+  padding: 2rem;
+  border: 1px solid cyan;
+  color: #fff;
+  border-radius: 5%;
+  display: inline-block;
+
+  input {
+    outline: none;
+  }
+}
+.errors{
+    color:red;
+    font-size: medium;
+    padding: 10px 5px 10px;
+}
+
+.inputs {
+  height: 2rem;
+  width: 15rem;
+  border: 1px solid silver;
+  margin: 10px 5px 10px;
+  border-radius: 5%;
+}
+.uploadinput {
+  height: 2rem;
+
+  border: 1px solid silver;
+  border-radius: 5%;
+  cursor: pointer;
+}
+.imageContainer{
+    max-width:5rem ;
+    max-height: 10rem; 
+    overflow: hidden;
+    border-radius: 50%;
+    
+
+    img{
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 10px;
+    }
+}
+.btnSubmit{
+    max-width: 12rem;
+    background-color: #7a81ae;
+    min-height: 2rem;
+    padding: 10px 5px 10px;
+    margin-top: 10px;
+
+    button{
+        outline: none;
+    }
+  
+}
+
+.btnSubmit:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
