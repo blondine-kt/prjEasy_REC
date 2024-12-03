@@ -23,6 +23,7 @@ function SignupCandidate() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
