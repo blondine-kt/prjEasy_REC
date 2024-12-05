@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import styles from "../../assets/styles/SignupRecruiter.module.scss";
 
 import { NavLink, useNavigate } from "react-router-dom";
@@ -8,37 +8,19 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { db } from "../../utils/firebase.utils";
 import { doc, setDoc } from "firebase/firestore";
 import { storage } from "../../utils/firebase.utils";
+import Api from "../../context/Apicontext";
 
 function SignupRecruiter() {
+  const{SOURCE} = useContext(Api)
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    companyName: "",
-    forfait: "",
-    phoneNumber: "",
+    nom_entreprise:"", 
+    email:"",
+    password:"",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
-
-  const options = [
-    {
-      id: "option1",
-      label: "Option 1",
-      description: "Description for option 1",
-    },
-    {
-      id: "option2",
-      label: "Option 2",
-      description: "Description for option 2",
-    },
-    {
-      id: "option3",
-      label: "Option 3",
-      description: "Description for option 3",
-    },
-  ];
+ 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,9 +29,7 @@ function SignupRecruiter() {
       [name]: value,
     }));
   };
-  const handleOptionChange = (value) => {
-    setSelectedOption(value);
-  };
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,26 +38,36 @@ function SignupRecruiter() {
 
     try {
       // Create auth user
-      const { user } = await createUserWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
+      // const { user } = await createUserWithEmailAndPassword(
+      //   auth,
+      //   formData.email,
+      //   formData.password
+      // );
 
-      // Save user data to Firestore
+      // // Save user data to Firestore
 
-      await setDoc(doc(db, "recruiters", user.uid), {
-        uid: user.uid,
-        email: formData.email,
-        companyName: formData.companyName,
-        forfait: selectedOption,
-        phoneNumber: formData.phoneNumber,
+      // await setDoc(doc(db, "recruiters", user.uid), {
+      //   uid: user.uid,
+      //   email: formData.email,
+      //   companyName: formData.companyName,
+      //   phoneNumber: formData.phoneNumber,
 
-        createdAt: new Date().toISOString(),
-      });
+      //   createdAt: new Date().toISOString(),
+      // });
+
+      const response= await fetch(`${SOURCE}/register_recruteur`, {
+
+        method:"POST",
+        
+        headers:{"Content-Type":"application/json"},
+        
+        body:JSON.stringify(formData),
+        });
+        const data= await response.json()
+        console.log('reponse:',data)
 
       // Navigate to dashboard
-      navigate("/candidate/dashboard");
+      navigate("/recruiter/login");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -110,7 +100,7 @@ function SignupRecruiter() {
         </div>
 
         <div className="d-flex flex-column">
-          <label className="block text-sm font-medium mb-1">Password</label>
+          <label>Password</label>
           <input
             type="password"
             name="password"
@@ -126,51 +116,12 @@ function SignupRecruiter() {
           <label className="block text-sm font-medium mb-1">Company Name</label>
           <input
             type="text"
-            name="firstName"
+            name="nom_entreprise"
             required
             className={`${styles.inputs} p-10`}
-            value={formData.companyName}
+            value={formData.nom_entreprise}
             onChange={handleChange}
           />
-        </div>
-        <div className="d-flex flex-column">
-          <label className="block text-sm font-medium mb-1">Phone Number</label>
-          <input
-            type="tel"
-            name="phoneNumber"
-            className={`${styles.inputs} p-10`}
-            value={formData.phoneNumber}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className={`${styles.radio_container} d-flex flex-row `}>
-          {options.map((option) => (
-            <div key={option.value} className={`${styles.radio_item}`}>
-              <input
-                type="radio"
-                id={option.value}
-                name="radio-group"
-                value={option.value}
-                checked={selectedOption === option.value}
-                onChange={() => handleOptionChange(option.value)}
-                className={`${styles.radio_input}`}
-              />
-              <label htmlFor={option.value} className={`${styles.radio_label}`}>
-                <span className={`${styles.radio_circle}`}></span>
-                <div className={`${styles.radio_content}`}>
-                  <span className={`${styles.radio_title}`}>
-                    {option.label}
-                  </span>
-                  {option.description && (
-                    <span className={`${styles.radio_description}`}>
-                      {option.description}
-                    </span>
-                  )}
-                </div>
-              </label>
-            </div>
-          ))}
         </div>
 
         <button
@@ -181,7 +132,7 @@ function SignupRecruiter() {
           {loading ? "Creating Account..." : "Register"}
         </button>
         <div>
-          <NavLink to="/candidate/login">Already have an account</NavLink>
+          <NavLink to="/recruiter/login">Already have an account</NavLink>
         </div>
       </form>
     </div>

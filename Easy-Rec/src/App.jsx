@@ -13,10 +13,20 @@ import { AuthProvider } from './context/usercontext';
 import ProtectedRoute from './components/ProtectedRoute';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+
+
 function App() {
+  const initialOptions = {
+    "client-id":"AfKALFn73Jm7HlCXf5WkSYWwhlD-o2OIKMaFVavQHQBB0g3a7LUR3pLXlAoMdWymzv8O4Hci8RaQMlGe",
+    currency: "USD",
+    intent: "capture",
+  };
+  
 
 
   return (
+    <PayPalScriptProvider options={initialOptions}>
     <AuthProvider>
     <Router>
     <div className={`${styles.app_container} d-flex flex-column `}>
@@ -53,6 +63,7 @@ function App() {
     </div>
     </Router>
     </AuthProvider>
+    </PayPalScriptProvider>
   )
 }
 

@@ -13,10 +13,6 @@ function Header() {
       <img src="../../assets/images/prjEasy_RecLogo.png" alt="FastVoiture icon" />
 
       <div>
-        <ul>
-          <li>Connexion</li>
-          <li>Inscription</li>
-        </ul>
       </div>
     </div>
   );

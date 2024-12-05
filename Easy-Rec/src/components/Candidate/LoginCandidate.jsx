@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useAuth } from "../../context/userAuth";
 import { useNavigate, NavLink } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -6,12 +6,13 @@ import { auth } from "../../utils/firebase.utils";
 import { db } from "../../utils/firebase.utils";
 import { doc, getDoc } from "firebase/firestore";
 import styles from "../../assets/styles/SignupCandidate.module.scss";
-
+import Api from "../../context/Apicontext";
 function LoginCandidate() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, user } = useAuth();
+  const{SOURCE}=useContext(Api) 
 
   useEffect(() => {
     if (user) {
@@ -21,45 +22,67 @@ function LoginCandidate() {
 
   
 
-  const getCandidateInfo = async (uid) => {
-    try {
-      const candidateRef = doc(db, "candidates", uid);
-      const candidateSnap = await getDoc(candidateRef);
+  // const getCandidateInfo = async (uid) => {
+  //   try {
+  //     const candidateRef = doc(db, "candidates", uid);
+  //     const candidateSnap = await getDoc(candidateRef);
 
-      if (candidateSnap.exists()) {
-        return candidateSnap.data();
-      } else {
-        throw new Error("No candidate found with this ID");
-      }
-    } catch (error) {
-      console.error("Error fetching candidate data:", error);
-      throw error;
-    }
-  };
+  //     if (candidateSnap.exists()) {
+  //       return candidateSnap.data();
+  //     } else {
+  //       throw new Error("No candidate found with this ID");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching candidate data:", error);
+  //     throw error;
+  //   }
+  // };
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      // First authenticate with Firebase
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      if (userCredential) {
-        const aUser = userCredential.user;
-        console.log(aUser);
-      } else {
-        console.log("None");
-      }
+      // // First authenticate with Firebase
+      // const userCredential = await signInWithEmailAndPassword(
+      //   auth,
+      //   email,
+      //   password
+      // );
+      // if (userCredential) {
+      //   const aUser = userCredential.user;
+      //   console.log(aUser);
+      // } else {
+      //   console.log("None");
+      // }
 
-      const candidateData = await getCandidateInfo(userCredential.user.uid);
+      // const candidateData = await getCandidateInfo(userCredential.user.uid);
+      const info = {email:email,password:password}
+      const response= await fetch(`${SOURCE}/log_candidat`, {
+  
+        method:"POST",
+        
+        headers:{"Content-Type":"application/json"},
+        
+        body:JSON.stringify(info),
+        });
+        const data= await response.json()
+        console.log('reponse:',data)
+        const candidateArray= data.message
+        const candidateData = {
+          name: candidateArray[0],
+          surname: candidateArray[1],
+          email: candidateArray[2],
+          password: candidateArray[3],
+          cv: candidateArray[4],
+          candidateId: candidateArray[5]
+        };
+        console.log(candidateData)
+
 
       login({
         ...candidateData,
         type: "candidate",
       });
-      console.log(candidateData);
+      
     } catch (error) {
       console.log("Login failed:", error);
     }

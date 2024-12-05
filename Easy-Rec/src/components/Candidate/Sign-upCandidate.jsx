@@ -1,6 +1,6 @@
 import styles from "../../assets/styles/SignupCandidate.module.scss";
 
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/userAuth";
 import { auth } from "../../utils/firebase.utils";
@@ -9,16 +9,17 @@ import { db } from "../../utils/firebase.utils";
 import { doc, setDoc } from "firebase/firestore";
 import { storage } from "../../utils/firebase.utils";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import Api from "../../context/Apicontext";
 
 function SignupCandidate() {
+
+  const { SOURCE } = useContext(Api)
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    profilePicture: null,
+    nom:"",
+    prenom:"",
+    email:"",
+    password:""
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -59,34 +60,46 @@ function SignupCandidate() {
 
     try {
       // Create auth user
-      const { user } = await createUserWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
+      // const { user } = await createUserWithEmailAndPassword(
+      //   auth,
+      //   formData.email,
+      //   formData.password
+      // );
 
-      // Handle profile picture upload
-      let profilePictureUrl = "";
-      if (formData.profilePicture) {
-        const storageRef = ref(storage, `profilePictures/${user.uid}`);
-        await uploadBytes(storageRef, formData.profilePicture);
-        profilePictureUrl = await getDownloadURL(storageRef);
-      }
+      // // Handle profile picture upload
+      // let profilePictureUrl = "";
+      // if (formData.profilePicture) {
+      //   const storageRef = ref(storage, `profilePictures/${user.uid}`);
+      //   await uploadBytes(storageRef, formData.profilePicture);
+      //   profilePictureUrl = await getDownloadURL(storageRef);
+      // }
 
       // Save user data to Firestore
 
-      await setDoc(doc(db, "candidates", user.uid), {
-        uid: user.uid,
-        email: formData.email,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        phoneNumber: formData.phoneNumber || "",
-        profilePicture: profilePictureUrl || "",
-        createdAt: new Date().toISOString(),
-      });
+      // await setDoc(doc(db, "candidates", user.uid), {
+      //   uid: user.uid,
+      //   email: formData.email,
+      //   firstName: formData.firstName,
+      //   lastName: formData.lastName,
+      //   phoneNumber: formData.phoneNumber || "",
+      //   profilePicture: profilePictureUrl || "",
+      //   createdAt: new Date().toISOString(),
+      // });
+
+      const response= await fetch(`${SOURCE}/register_candidat`, {
+  
+        method:"POST",
+        
+        headers:{"Content-Type":"application/json"},
+        
+        body:JSON.stringify(formData),
+        });
+        const data= await response.json()
+        console.log('reponse:',data)
+        
 
       // Navigate to dashboard
-       navigate('/candidate/dashboard');
+       navigate('/candidate/login');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -118,7 +131,7 @@ function SignupCandidate() {
         </div>
 
         <div className="d-flex flex-column">
-          <label className="block text-sm font-medium mb-1">Password</label>
+          <label >Password</label>
           <input
             type="password"
             name="password"
@@ -131,63 +144,31 @@ function SignupCandidate() {
         </div>
 
         <div className="d-flex flex-column">
-          <label className="block text-sm font-medium mb-1">First Name</label>
+          <label >First Name</label>
           <input
             type="text"
-            name="firstName"
+            name="nom"
             required
             className={`${styles.inputs} p-10`}
-            value={formData.firstName}
+            value={formData.nom}
             onChange={handleChange}
           />
         </div>
 
         <div className="d-flex flex-column">
-          <label className="block text-sm font-medium mb-1">Last Name</label>
+          <label >Last Name</label>
           <input
             type="text"
-            name="lastName"
+            name="prenom"
             required
             className={`${styles.inputs} p-10`}
-            value={formData.lastName}
+            value={formData.prenom}
             onChange={handleChange}
           />
         </div>
 
-        <div className="d-flex flex-column">
-          <label className="block text-sm font-medium mb-1">
-            Phone Number 
-          </label>
-          <input
-            type="tel"
-            name="phoneNumber"
-            className={`${styles.inputs} p-10`}
-            value={formData.phoneNumber}
-            onChange={handleChange}
-          />
-        </div>
 
-        <div className="d-flex flex-column">
-          <label className="block text-sm font-medium mb-1">
-            Profile Picture
-          </label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className={`${styles.uploadinput}`}
-          />
-        </div>
-        {imagePreview && (
-          <div className={`${styles.imageContainer}`}>
-            <img
-              src={imagePreview}
-              alt="Profile preview"
-              
-            />
-          </div>
-        )}
-
+        
         <button
           type="submit"
           disabled={loading}

@@ -1,0 +1,120 @@
+/* Container principal */
+.subscription-container {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  
+  /* Styles de base pour les cartes */
+  .subscription-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 24px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  /* Variantes des cartes */
+  .subscription-card--basic {
+    border-top: 4px solid #2563eb;
+  }
+  
+  .subscription-card--pro {
+    border-top: 4px solid #7c3aed;
+  }
+  
+  .subscription-card--enterprise {
+    border-top: 4px solid #059669;
+  }
+  
+  /* Titres */
+  .subscription-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .subscription-title--basic {
+    color: #2563eb;
+  }
+  
+  .subscription-title--pro {
+    color: #7c3aed;
+  }
+  
+  .subscription-title--enterprise {
+    color: #059669;
+  }
+  
+  /* Prix */
+  .subscription-price {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  /* Description */
+  .subscription-description {
+    color: #666666;
+    margin-bottom: 16px;
+  }
+  
+  /* Liste des fonctionnalités */
+  .subscription-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px 0;
+  }
+  
+  .subscription-feature-item {
+    margin-bottom: 8px;
+    color: #666666;
+  }
+  
+  /* Boutons */
+  .subscription-button {
+    width: 100%;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .subscription-button--basic {
+    background-color: #2563eb;
+  }
+  
+  .subscription-button--basic:hover {
+    background-color: #1d4ed8;
+  }
+  
+  .subscription-button--pro {
+    background-color: #7c3aed;
+  }
+  
+  .subscription-button--pro:hover {
+    background-color: #6d28d9;
+  }
+  
+  .subscription-button--enterprise {
+    background-color: #059669;
+  }
+  
+  .subscription-button--enterprise:hover {
+    background-color: #047857;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .subscription-container {
+      grid-template-columns: 1fr;
+    }
+  }
