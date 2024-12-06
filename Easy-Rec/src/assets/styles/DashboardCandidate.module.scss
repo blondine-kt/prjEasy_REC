@@ -1,3 +1,75 @@
 .dashboard_body{
   background-image: linear-gradient(90deg, rgba(222,241,240,1) 11%, rgba(62,205,204,1) 48%, rgba(0,255,133,1) 100%);
 }
+
+.btnUpload{
+  border: 1px dashed gray;
+  width: 15rem;
+  height: 5rem;
+  
+
+}
+.file_input_wrapper {
+  display: inline-flex;
+  align-items: center;
+  margin: 20px;
+}
+
+.file_input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.file_button {
+  padding: 12px 24px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.file_button:hover {
+  background-color: #00f8ff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.file_button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.file_button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3);
+}
+
+.file_name {
+  margin-left: 12px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* For dark mode support */
+@media (prefers-color-scheme: dark) {
+  .file_button {
+    background-color: #5a9ee2;
+  }
+  
+  .file_button:hover {
+    background-color: #4a90e2;
+  }
+  
+  .file_name {
+    color: #999;
+  }
+}

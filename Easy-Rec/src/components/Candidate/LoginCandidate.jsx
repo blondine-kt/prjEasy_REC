@@ -12,15 +12,13 @@ function LoginCandidate() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, user } = useAuth();
-  const{SOURCE}=useContext(Api) 
+  const { SOURCE } = useContext(Api);
 
   useEffect(() => {
     if (user) {
       navigate("/candidate/dashboard");
     }
   }, [user, navigate]);
-
-  
 
   // const getCandidateInfo = async (uid) => {
   //   try {
@@ -55,34 +53,39 @@ function LoginCandidate() {
       // }
 
       // const candidateData = await getCandidateInfo(userCredential.user.uid);
-      const info = {email:email,password:password}
-      const response= await fetch(`${SOURCE}/log_candidat`, {
-  
-        method:"POST",
-        
-        headers:{"Content-Type":"application/json"},
-        
-        body:JSON.stringify(info),
-        });
-        const data= await response.json()
-        console.log('reponse:',data)
-        const candidateArray= data.message
+      const info = { email: email, password: password };
+      const response = await fetch(`${SOURCE}/log_candidat`, {
+        method: "POST",
+
+        headers: { "Content-Type": "application/json" },
+
+        body: JSON.stringify(info),
+      });
+
+      const data = await response.json();
+      console.log("reponse:", data);
+      if (
+        data.message == "password invalide " ||
+        data.message == "email invalide"
+      ) {
+        alert("Invalid Credentials");
+      } else {
+        const candidateArray = data.message;
         const candidateData = {
           name: candidateArray[0],
           surname: candidateArray[1],
           email: candidateArray[2],
           password: candidateArray[3],
           cv: candidateArray[4],
-          candidateId: candidateArray[5]
+          candidateId: candidateArray[5],
         };
-        console.log(candidateData)
+        console.log(candidateData);
 
-
-      login({
-        ...candidateData,
-        type: "candidate",
-      });
-      
+        login({
+          ...candidateData,
+          type: "candidate",
+        });
+      }
     } catch (error) {
       console.log("Login failed:", error);
     }
@@ -95,7 +98,10 @@ function LoginCandidate() {
           className={`${styles.candidateSignup} d-flex p-20 flex-column justify-content-center align-items-center poppins-medium `}
         >
           <div>
-            <form onSubmit={handleLogin} className={`${styles.registrationform} flex-column`}>
+            <form
+              onSubmit={handleLogin}
+              className={`${styles.registrationform} flex-column`}
+            >
               <div className="d-flex flex-column">
                 <label htmlFor="email-address">Email address</label>
                 <input

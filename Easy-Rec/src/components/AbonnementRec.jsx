@@ -6,39 +6,33 @@ const SubscriptionPlansRec = () => {
     const plans = [
         {
           name: 'Basic',
-          price: 19,
-          description: 'Pour les recruteurs qui souhaitent simplifier leur processus de sélection',
+          description: 'Pour commencer le recrutement',
           features: [
-            'Liste de candidats présélectionnés',
-            'Filtrage selon les critères de base',
-            'Correspondance automatique avec vos offres',
-            'Export des profils en PDF'
-          ],
-          variant: 'basic'
+            'Liste de candidats filtrée selon vos critères',
+            'Accès aux profils de base',
+            'Recherche simple de candidats'
+          ]
         },
         {
           name: 'Pro',
-          price: 49,
-          description: 'Pour les candidats qui veulent maximiser leurs chances',
+          description: 'Optimisez votre processus',
           features: [
-            'Génération de lettres de motivation en un clic',
-            'Adaptation automatique selon l\'offre',
-            'Suggestions personnalisées',
-            'Suivi des candidatures'
-          ],
-          variant: 'pro'
+            'Toutes les fonctionnalités Basic',
+            'Génération automatique de lettres de motivation',
+            'Personnalisation avancée des critères',
+            'Export des données candidates'
+          ]
         },
         {
           name: 'Enterprise',
-          price: 99,
-          description: 'Solution complète pour recruteurs et candidats',
+          description: 'Solution complète IA',
           features: [
-            'Chatbot IA pour le filtrage des candidats',
-            'Conseils d\'amélioration des CVs',
-            'Analyses détaillées des profils',
-            'Support dédié 7j/7'
-          ],
-          variant: 'enterprise'
+            'Toutes les fonctionnalités Pro',
+            'Assistant IA pour le filtrage',
+            'Optimisation des CV assistée par IA',
+            'Analyses et rapports détaillés',
+            'Support dédié'
+          ]
         }
       ];
     

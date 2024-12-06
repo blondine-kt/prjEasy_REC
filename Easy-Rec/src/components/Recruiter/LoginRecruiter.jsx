@@ -78,7 +78,7 @@ function LoginRecruiter() {
       <section
         className={`${styles.recruiterSignup} d-flex p-20 flex-column justify-content-center align-items-center poppins-medium `}
       >
-        <div>
+        <div >
           <form onSubmit={handleLogin} className={`${styles.registrationform} flex-column`}>
             <div className="d-flex flex-column">
               <label htmlFor="email-address">Email address</label>
@@ -114,7 +114,7 @@ function LoginRecruiter() {
           </form>
 
           <p className="text-sm text-white text-center">
-            No account yet? <NavLink to="/candidate/signup">Sign up</NavLink>
+            No account yet? <NavLink to="/recruiter/signup">Sign up</NavLink>
           </p>
         </div>
       </section>
