@@ -47,22 +47,23 @@ function LoginRecruiter() {
         body:JSON.stringify(info),
         });
         const data= await response.json()
-        console.log('reponse:',data)
-        const recruiterArray= data.message
-        const recruiterData = {
-          company_id: recruiterArray[0],
-          company_name: recruiterArray[1],
-          email: recruiterArray[2],
-          password: recruiterArray[3],
-          
-        };
-        console.log(recruiterData)
-
-
-      login({
-        ...recruiterData,
-        type: "recruiter",
-      });
+        console.log(data)
+        if(data){
+          const recruiter= data.message
+          const recruiterData = {
+            company_id: recruiter.recruteur_id ,
+            company_name: recruiter.nom_entreprise,
+        
+          };
+          console.log(recruiterData)
+  
+  
+        login({
+          ...recruiterData,
+          type: "recruiter",
+        });
+        }
+        
       
     } catch (error) {
       console.log("Login failed:", error);

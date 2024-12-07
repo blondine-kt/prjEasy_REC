@@ -27,13 +27,15 @@ function CandidateDashBoard() {
 
     try{
         const formData = new FormData
-        formData.append(file)
+        formData.append('file',file)
+        formData.append('candidat_id', String(user.candidateId))
+        
 
         const response= await fetch(`${SOURCE}/upload_cv`, {
     
           method:"POST",
           
-          body:file,
+          body:formData,
           });
            const data= await response.json()
            console.log('reponse:',data)
