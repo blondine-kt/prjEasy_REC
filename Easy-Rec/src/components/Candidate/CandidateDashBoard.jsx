@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "../../assets/styles/DashboardCandidate.module.scss";
 import SubscriptionPlans from "../Abonnement";
 import Api from "../../context/Apicontext";
+import FloatingChatbot from "../Chat";
 
 function CandidateDashBoard() {
   const{SOURCE} = useContext(Api)
@@ -61,6 +62,7 @@ function CandidateDashBoard() {
       <div className="p-20"><SubscriptionPlans/></div>
       
       <hr/>
+      { user.cv ? <div></div> :
       <div className={`${styles.btnUpload} d-flex justify-content-center align-items-center p-20`}>
       <div className={`${styles.file_input_wrapper}`}>
       <input
@@ -84,9 +86,13 @@ function CandidateDashBoard() {
       </div>
       
       </div>
+      }
+      <div>
 
+      </div>
 
-
+     
+     <FloatingChatbot/>
       
     </div>
   );

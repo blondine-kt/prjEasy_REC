@@ -1,8 +1,43 @@
-import React from 'react';
+import React,{useState, useContext} from 'react';
 import '../assets/styles/Abonement.css'
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import { useAuth } from '../context/userAuth';
+import Api from '../context/Apicontext';
 
 const SubscriptionPlansRec = () => {
+
+  const{ user } = useAuth()
+  const { SOURCE } = useContext(Api)
+  
+
+
+  const handleAbonnement = async(name) =>{
+    try{
+      const dataTosend={
+        forfait:name,
+        recruteur_id:String(user.company_id)
+      }
+    
+      const response = await fetch(`${SOURCE}/abonnement_recruteurs`, {
+        method: "POST",
+
+        headers: { "Content-Type": "application/json" },
+
+        body:JSON.stringify(dataTosend),
+      });
+      const data = await response.json();
+      if(data){
+        console.log("reponse:", data);
+        
+      }
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+ 
+
+
     const plans = [
         {
           name: 'Basic',
@@ -56,12 +91,13 @@ const SubscriptionPlansRec = () => {
         }
       };
     
-      const onApprove = async (data, actions) => {
+      const onApprove = (name) => async (data, actions) => {
         try {
           const details = await actions.order.capture();
           console.log('Payment successful:', details);
           alert(`Transaction completed by ${details.payer.name.given_name}`);
           // Here you would handle the successful payment
+          handleAbonnement(name)
         } catch (error) {
           console.error('Payment failed:', error);
           alert('There was an error processing your payment');
@@ -92,7 +128,7 @@ const SubscriptionPlansRec = () => {
                 </ul>
                 <PayPalButtons 
                   createOrder={createOrder(plan.price)}
-                  onApprove={onApprove}
+                  onApprove={onApprove(plan.name)}
                   onError={onError}
                   style={{
                     layout: "horizontal",
@@ -100,6 +136,7 @@ const SubscriptionPlansRec = () => {
                     shape: "rect",
                     label: "subscribe"
                   }}
+                
                 />
               </div>
             ))}
