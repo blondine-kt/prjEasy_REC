@@ -9,24 +9,33 @@ import styles from "../../assets/styles/Offres.module.scss"
 function Offres() {
     const{ user } = useAuth()
     const{SOURCE} = useContext(Api)
+    const defaultValues={
+      titre:"",
+      salaire:"",
+      description:"",
+      competences:""
+
+    }
     const formSchema = yup.object({
         titre: yup.string().required("Le nom de la position est requis"),
         salaire: yup.string().required("le salaire est requis"),
-        description: yup.string().required("Description de l'emploi est requise")
+        description: yup.string().required("Description de l'emploi est requise"),
+        competences: yup.string().required("Ajoutez une competence")
       });
       
       const {
         handleSubmit,
         register,
         formState: { errors },
-      } = useForm({ resolver: yupResolver(formSchema) });
+      } = useForm({  defaultValues ,resolver: yupResolver(formSchema) });
 
       const submit = async (values) => {
         let dataOffre ={
             "titre": values.titre,
             "recruteur_id": String( user.company_id),
             "salaire": values.salaire,
-            "description": values.description
+            "description": values.description,
+            "competences": values.competences
         }
         
         console.log(dataOffre);
@@ -40,6 +49,7 @@ function Offres() {
         });
         const data= await response.json()
         console.log('reponse:',data)
+       
         };
 
   return (
@@ -52,12 +62,16 @@ function Offres() {
         <input type="text" id="titre" {...register("titre")} />
         </div>
 
-        
-
         <div className="p-10">
           <label htmlFor="salaire" className="p-5">Salaire</label>
         <input type="text" id="salaire" {...register("salaire")} />
         </div>
+
+        <div className="p-10 d-flex flex-column">
+          <label htmlFor="competences" className="p-5">Competences</label>
+          <textarea type="text" id="competences" {...register("competences")} />
+        </div>
+
 
         <div className="p-10 d-flex flex-column">
         <label htmlFor="description" className="p-5">Description</label>

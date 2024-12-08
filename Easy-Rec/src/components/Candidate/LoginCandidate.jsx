@@ -7,18 +7,20 @@ import { db } from "../../utils/firebase.utils";
 import { doc, getDoc } from "firebase/firestore";
 import styles from "../../assets/styles/SignupCandidate.module.scss";
 import Api from "../../context/Apicontext";
+import AbonnementContext from "../../context/abonnementContext";
 function LoginCandidate() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, user } = useAuth();
   const { SOURCE } = useContext(Api);
+  const {abonnement, setAbonnement} = useContext(AbonnementContext)
 
   useEffect(() => {
     if (user) {
       navigate("/candidate/dashboard");
     }
-  }, [user, navigate]);
+  }, [user, navigate,abonnement]);
 
   // const getCandidateInfo = async (uid) => {
   //   try {
@@ -35,6 +37,23 @@ function LoginCandidate() {
   //     throw error;
   //   }
   // };
+  const getSubs = async (id) => {
+    try {
+      const response = await fetch(`${SOURCE}/get_abonnement_By_Cid/${id}`);
+
+      const data = await response.json();
+      const subscription = data.message;
+      const subsData = {
+        forfait: subscription.forfait,
+        debut: subscription.date_debut,
+        fin: subscription.date_fin,
+      };
+      console.log(subsData)
+      setAbonnement(subsData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -71,6 +90,7 @@ function LoginCandidate() {
         alert("Invalid Credentials");
       } else {
         const candidateArray = data.message;
+        await getSubs(String(candidateArray[5]));
         const candidateData = {
           name: candidateArray[0],
           surname: candidateArray[1],
@@ -80,7 +100,9 @@ function LoginCandidate() {
           candidateId: candidateArray[5],
         };
         console.log(candidateData);
+        
 
+        
         login({
           ...candidateData,
           type: "candidate",

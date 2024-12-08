@@ -5,12 +5,19 @@ import styles from "../../assets/styles/DashboardCandidate.module.scss";
 import SubscriptionPlans from "../Abonnement";
 import Api from "../../context/Apicontext";
 import FloatingChatbot from "../Chat";
+import JobListings from "./JobPostings";
+import AbonnementContext from "../../context/abonnementContext";
+
 
 function CandidateDashBoard() {
   const{SOURCE} = useContext(Api)
   const { user } = useAuth();
+  const { abonnement } = useContext(AbonnementContext)
+ 
 
-  const[selectedFile, setSelectedFile] = useState(null)
+  const[visible, setVisible]= useState(false)
+
+ 
   const inputRef = useRef(null);
   const[fileName,setFileName] = useState('Aucun fichiers Televerser')
 
@@ -51,6 +58,10 @@ function CandidateDashBoard() {
   const handleButtonClick = () => {
     inputRef.current?.click();
   };
+
+  const handleVisible =() =>{
+
+  }
  
 
   
@@ -59,8 +70,10 @@ function CandidateDashBoard() {
     <div className={`${styles.dashboard_body} p-20 `}>
       <h1>Welcome to Candidate Dashboard</h1>
       <p>Hello, {user.name} {user.surname}!</p>
+      {abonnement ? <div><p>Abonnement : {abonnement.forfait}</p>
+      <p>Duree : {abonnement.debut} - {abonnement.fin}</p></div>: 
       <div className="p-20"><SubscriptionPlans/></div>
-      
+      }
       <hr/>
       { user.cv ? <div></div> :
       <div className={`${styles.btnUpload} d-flex justify-content-center align-items-center p-20`}>
@@ -87,14 +100,19 @@ function CandidateDashBoard() {
       
       </div>
       }
-      <div>
-
-      </div>
-
      
-     <FloatingChatbot/>
       
+      <div>
+       <JobListings />
+      </div>
+      
+    
+      <div>
+     <FloatingChatbot/>
+     </div>
+     
     </div>
+     
   );
 }
 

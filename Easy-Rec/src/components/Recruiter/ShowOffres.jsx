@@ -1,13 +1,14 @@
 import React, { useState, useContext } from "react";
 import { useAuth } from "../../context/userAuth";
 import Api from "../../context/Apicontext";
-import styles from '../../assets/styles/ShowOffres.module.scss'
+
 
 const InfoList = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [expandedId, setExpandedId] = useState(null);
   const { user } = useAuth();
   const { SOURCE } = useContext(Api);
+  const [ offers, setOffers ]= useState([])
 
   const allOffers = async () => {
     try {
@@ -21,36 +22,18 @@ const InfoList = () => {
         body:JSON.stringify(recruteurs_id),
       });
       const data = await response.json();
+      setOffers(data.message)
       if(data){
         console.log("reponse:", data);
         setIsVisible(!isVisible)
+        console.log(offers)
       }
       
     } catch (error) {
       console.log(error);
     }
   };
-  // Sample data - replace with your actual API response
-  const infoArray = [
-    {
-      id: 1,
-      title: "First Information",
-      description: "This is the description for the first item",
-      details: "More detailed information about the first item goes here",
-    },
-    {
-      id: 2,
-      title: "Second Information",
-      description: "This is the description for the second item",
-      details: "More detailed information about the second item goes here",
-    },
-    {
-      id: 3,
-      title: "Third Information",
-      description: "This is the description for the third item",
-      details: "More detailed information about the third item goes here",
-    },
-  ];
+  
 
   const handleItemClick = (id) => {
     setExpandedId(expandedId === id ? null : id);
@@ -64,7 +47,7 @@ const InfoList = () => {
       fontFamily: "Arial, sans-serif",
     },
     toggleButton: {
-      padding: "10px 20px",
+      padding: "15px 20px",
       backgroundColor: "#a0eaf2",
       color: "white",
       border: "none",
@@ -96,6 +79,7 @@ const InfoList = () => {
       padding: "20px",
       backgroundColor: "white",
       borderTop: "1px solid #e5e7eb",
+      overflow:"scroll"
     },
     description: {
       marginBottom: "10px",
@@ -111,34 +95,36 @@ const InfoList = () => {
   };
 
   return (
-    <div style={`${styles.container}`}>
+    <div style={styles.container}>
       <button
-        style={`${styles.toggleButton}`}
+        style={styles.toggleButton}
         onClick={allOffers}
       >
         {isVisible ? "Cacher Les Offres" : "Voir les Offres"}
       </button>
 
       <div style={styles.infoList}>
-        {infoArray.map((info) => (
-          <div key={info.id} style={styles.infoItem}>
-            <div style={styles.title} onClick={() => handleItemClick(info.id)}>
-              {info.title}
+        {offers.map((offer,index) => (
+          <div key={index} style={styles.infoItem}>
+            <div style={styles.title} onClick={() => handleItemClick(index)}>
+              {offer.titre}
               <span
                 style={{
                   ...styles.arrow,
                   transform:
-                    expandedId === info.id ? "rotate(180deg)" : "rotate(0deg)",
+                    expandedId === index ? "rotate(180deg)" : "rotate(0deg)",
                 }}
               >
                 ▼
               </span>
             </div>
 
-            {expandedId === info.id && (
+            {expandedId === index && (
               <div style={styles.content}>
-                <div style={styles.description}>{info.description}</div>
-                <div style={styles.details}>{info.details}</div>
+               <div style={styles.details}><strong> Salaire: {offer.salaire} </strong></div>
+                <div style={styles.description}> Competences:{offer.competences}</div>
+                <div style={styles.description}>Descriptions: {offer.description}</div>
+                <div style={styles.description}>Candidats: {offer.cv}</div>
               </div>
             )}
           </div>

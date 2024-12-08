@@ -12,6 +12,7 @@ import RecruiterDashBoard from './components/Recruiter/RecruiterDashBoard';
 import { AuthProvider } from './context/usercontext';
 import ProtectedRoute from './components/ProtectedRoute';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AbonnementProvider from './context/AbonnementProvider';
 
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
@@ -23,15 +24,18 @@ function App() {
     intent: "capture",
   };
   
+  
 
 
   return (
     <PayPalScriptProvider options={initialOptions}>
     <AuthProvider>
+    <AbonnementProvider>
     <Router>
     <div className={`${styles.app_container} d-flex flex-column `}>
      <Header/>
      <main>
+     
      <Routes>
      <Route path='/' element={<Content/> }/>
      <Route path="/candidate">
@@ -58,10 +62,12 @@ function App() {
                 />
             </Route>
      </Routes>
+     
      </main>
      <Footer/>
     </div>
     </Router>
+    </AbonnementProvider>
     </AuthProvider>
     </PayPalScriptProvider>
   )

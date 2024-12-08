@@ -1,45 +1,181 @@
-.container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
+/* Job Listings Page Container */
+.job_listings_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
   }
-  .toggleButton {
-    padding: 10px 20px;
-    background-color: #a0eaf2;
-    color: white;
-    border: none;
+  
+  /* Page Title */
+  .page_title {
+    font-size: 2.5rem;
+    color: #1a1a1a;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  /* Job Card */
+  .job_card {
+    background: #ffffff;
     border-radius: 8px;
-    cursor: pointer;
-    margin-bottom: 20px;
-    transition: background-color 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    margin-bottom: 1.5rem;
   }
-  .infoItem {
-    border-bottom: 1px solid #e5e7eb;
-    transition: background-color 0.2s;
+  
+  .job_card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
-  .title {
-    padding: 15px 20px;
-    background-color: #f8fafc;
+  
+  /* Job Card Header */
+  .job_header {
+    padding: 1.5rem;
     cursor: pointer;
-    display: 'flex';
+    display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .job_header:hover {
+    background-color: #f8f9fa;
+  }
+  
+  /* Job Title */
+  .job_title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Job Salary */
+  .job_salary {
+    color: #38a169;
     font-weight: 500;
+    font-size: 1.1rem;
   }
-  .content {
-    padding: 20px;
-    background-color: white;
-    border-top: 1px solid #e5e7eb;
+  
+  /* Apply Button */
+  .apply_button {
+    background-color: #42e1c6;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    border: none;
+    cursor: pointer;
   }
-  .description {
-    margin-bottom: 10px;
-    color: #4b5563;
-  };
-  .details {
-    color: #6b7280;
-    font-size: 0.95em;
+  
+  .apply_button:hover {
+    background-color: #90ecd8;
   }
-  .arrow {
-    transition: transform 0.2s;
+  
+  .apply_button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(32, 247, 229, 0.5);
+  }
+  
+  /* Job Details Section */
+  .job_details {
+    padding: 1.5rem;
+    background-color: #f8fafc;
+  }
+  
+  /* Description Section */
+  .description_section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .section_title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 0.75rem;
+  }
+  
+  .description_text {
+    color: #4a5568;
+    line-height: 1.6;
+  }
+  
+  /* Competencies List */
+  .competencies_list {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    color: #4a5568;
+  }
+  
+  .competency_item {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Expand/Collapse Icon */
+  .toggle_icon {
+    width: 24px;
+    height: 24px;
+    margin-left: 1rem;
+    transition: transform 0.2s ease;
+  }
+  
+  .toggle_icon.expanded {
+    transform: rotate(180deg);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .job_header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .button_container {
+      margin-top: 1rem;
+      width: 100%;
+    }
+    
+    .apply_button {
+      width: 100%;
+    }
+    
+    .job_title {
+      font-size: 1.1rem;
+    }
+    
+    .job_salary {
+      font-size: 1rem;
+    }
+  }
+  
+  /* Animation for expanding/collapsing */
+  .job_details {
+    animation: slideDown 0.3s ease-out;
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Loading State */
+  .loading_skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+  
+  @keyframes loading {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
   }

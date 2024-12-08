@@ -3,6 +3,7 @@ import Api from "../../context/Apicontext";
 import { useAuth } from "../../context/userAuth";
 import { useNavigate, NavLink } from "react-router-dom";
 import styles from "../../assets/styles/SignupRecruiter.module.scss";
+import AbonnementContext from "../../context/abonnementContext";
 
 
 
@@ -12,14 +13,33 @@ function LoginRecruiter() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, user } = useAuth();
+  const { login, user} = useAuth();
   const{SOURCE}=useContext(Api) 
+  const {abonnement, setAbonnement} = useContext(AbonnementContext)
 
   useEffect(() => {
     if (user) {
       navigate("/recruiter/dashboard");
     }
-  }, [user, navigate]);
+  }, [user, navigate, abonnement]);
+
+  const getSubs = async (id) => {
+    try {
+      const response = await fetch(`${SOURCE}/abonnement_recruteurs/${id}`);
+
+      const data = await response.json();
+      const subscription = data.message;
+      const subsData = {
+        forfait: subscription.forfait,
+        debut: subscription.date_debut,
+        fin: subscription.date_fin,
+      };
+      console.log(subsData)
+      setAbonnement(subsData);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -56,6 +76,8 @@ function LoginRecruiter() {
         
           };
           console.log(recruiterData)
+
+          await getSubs(String(recruiter.recruteur_id))
   
   
         login({

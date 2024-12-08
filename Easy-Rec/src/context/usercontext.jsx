@@ -6,21 +6,18 @@ import { AuthContext } from './auth';
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-   const [abonement,setAbonnement ] = useState(null)
+  
 
   const login = (userData) => {
     setUser(userData);
   };
-  const newAbonement = (abonement)=>{
-    setAbonnement(abonement)
-  }
 
   const logout = () => {
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, abonement, newAbonement }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

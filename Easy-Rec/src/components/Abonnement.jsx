@@ -3,17 +3,19 @@ import '../assets/styles/Abonement.css'
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useAuth } from '../context/userAuth';
 import Api from '../context/Apicontext';
+import AbonnementContext from '../context/abonnementContext';
 
 const SubscriptionPlans = () => {
 
   const{ user } = useAuth()
   const { SOURCE } = useContext(Api)
+  
 
   const handleAbonnement = async(name) =>{
     try{
       const dataTosend={
         forfait:name,
-        recruteur_id:String(user.candidateId)
+        candidat_id:String(user.candidateId)
       }
     
       const response = await fetch(`${SOURCE}/abonnement_candidats`, {
