@@ -1,0 +1,166 @@
+.apply_button_container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .apply_button {
+    background-color: #1de88c;
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+  }
+  
+  .apply_button:hover {
+    background-color: #1dd8b9;
+  }
+  
+  .dropdown_container {
+    position: relative;
+  }
+  
+  .dropdown_menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 8px;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    z-index: 1000;
+  }
+  
+  .dropdown_item {
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    display: block;
+    color: #374151;
+    transition: background-color 0.2s;
+  }
+  
+  .dropdown_item:hover {
+    background-color: #f3f4f6;
+  }
+  
+  .dropdown_item:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .with_icon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .icon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  
+  /* Dialog styles */
+  .dialog_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .dialog_content {
+    background-color: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .dialog_header {
+    padding: 16px 24px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .dialog_header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+  }
+  
+  .close_button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 4px;
+  }
+  
+  .preview_content {
+    padding: 24px;
+    overflow-y: auto;
+    max-height: 60vh;
+  }
+  
+  .letter_content {
+    font-family: serif;
+    line-height: 1.6;
+    color: #374151;
+    /* Remove any previous white-space property if it exists */
+  }
+  
+  .dialog_footer {
+    padding: 16px 24px;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+  
+  .cancel_button {
+    padding: 8px 16px;
+    border: 1px solid #e5e7eb;
+    background-color: white;
+    border-radius: 6px;
+    color: #374151;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .cancel_button:hover {
+    background-color: #f3f4f6;
+  }
+  
+  .download_button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #49ef85;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .download_button:hover {
+    background-color: #98f5d1;
+  }
