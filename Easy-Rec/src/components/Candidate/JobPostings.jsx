@@ -2,22 +2,33 @@ import { useState, useEffect, useContext } from "react";
 import styles from "../../assets/styles/ShowOffres.module.scss";
 import Api from "../../context/Apicontext";
 import ApplyButton from "./ButtonApply";
-
+import { useAuth } from "../../context/userAuth";
+import AbonnementContext from "../../context/abonnementContext";
 const JobListings = () => {
   const [jobOffers, setJobOffers] = useState([]);
   const [loading, setLoading] = useState(true);
   const { SOURCE } = useContext(Api);
+  const [ url, SetUrl] = useState('')
   const [expandedId, setExpandedId] = useState(null);
+  const { user } = useAuth()
+  const { abonnement } = useContext(AbonnementContext)
 
   useEffect(() => {
-    fetch(`${SOURCE}/`)
+    
+    let id = String(user.candidateId)
+    if(abonnement.forfait != 'Basic' && user){
+        SetUrl(`${SOURCE}/matching/${id}`)
+    }else{
+        SetUrl(`${SOURCE}/`)
+    }
+    fetch(url)
       .then((response) => response.json())
       .then((data) => {
         setJobOffers(data.response); // assuming the API response is an array
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching job offers:", error);
+        console.log("Error fetching job offers:", error);
         setLoading(false); // Important to set loading to false even on error
       });
   }, []);

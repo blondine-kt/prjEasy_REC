@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Download } from "lucide-react";
 import Api from "../../context/Apicontext";
 import styles from "../../assets/styles/ButtonApply.module.scss";
+import AbonnementContext from "../../context/abonnementContext";
 
 const ApplyButton = (id) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -9,6 +10,7 @@ const ApplyButton = (id) => {
   const [showPreview, setShowPreview] = useState(false);
   const [coverLetter, setCoverLetter] = useState("");
   const { SOURCE } = useContext(Api);
+  const { abonnement } = useContext(AbonnementContext)
 
   const handleGenerateCoverLetter = async () => {
     console.log(id);
@@ -96,11 +98,13 @@ const ApplyButton = (id) => {
             >
               Apply Now
             </button>
+            {abonnement.forfait !="Basic" ?
             <button
               className={`${styles.dropdown_item}`}
               onClick={handleGenerateCoverLetter}
               disabled={isLoading}
             >
+            
               {isLoading ? (
                 "Generating..."
               ) : (
@@ -109,8 +113,10 @@ const ApplyButton = (id) => {
                   <Download className={`${styles.icon}`} />
                 </span>
               )}
-            </button>
-          </div>
+            </button>:
+            <></>
+            }
+          </div> 
         )}
       </div>
 

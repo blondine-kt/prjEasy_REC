@@ -25,7 +25,7 @@ function LoginRecruiter() {
 
   const getSubs = async (id) => {
     try {
-      const response = await fetch(`${SOURCE}/abonnement_recruteurs/${id}`);
+      const response = await fetch(`${SOURCE}/get_abonnement_By_Rid/${id}`);
 
       const data = await response.json();
       const subscription = data.message;

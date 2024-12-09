@@ -3,4 +3,16 @@
 }
 
  
-  
+.btnDisconnect{
+    border: 1px solid red;
+    width: 8rem;
+    height: 4rem;
+    color: aliceblue;
+    font-weight: 200;
+    background-color: #ff0048;
+    border-radius: 10px 10px 10px 10px;
+  }
+
+  .btnDisconnect:hover{
+    background-color: #ee4b6b97;
+  }

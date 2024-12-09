@@ -3,11 +3,13 @@ import '../assets/styles/Abonement.css'
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useAuth } from '../context/userAuth';
 import Api from '../context/Apicontext';
-
+import AbonnementContext from '../context/abonnementContext';
 const SubscriptionPlansRec = () => {
 
   const{ user } = useAuth()
   const { SOURCE } = useContext(Api)
+  
+  
   
 
 
@@ -41,25 +43,29 @@ const SubscriptionPlansRec = () => {
     const plans = [
         {
           name: 'Basic',
+          price: 30,
           description: 'Pour commencer le recrutement',
           features: [
             'Liste de candidats filtrée selon vos critères',
             'Accès aux profils de base',
             'Recherche simple de candidats'
-          ]
+          ],
+           variant: 'basic'
         },
         {
           name: 'Pro',
+          price: 49,
           description: 'Optimisez votre processus',
           features: [
             'Toutes les fonctionnalités Basic',
-            'Génération automatique de lettres de motivation',
             'Personnalisation avancée des critères',
             'Export des données candidates'
-          ]
+          ],
+          variant:'pro'
         },
         {
           name: 'Enterprise',
+          price: 99,
           description: 'Solution complète IA',
           features: [
             'Toutes les fonctionnalités Pro',
@@ -67,7 +73,8 @@ const SubscriptionPlansRec = () => {
             'Optimisation des CV assistée par IA',
             'Analyses et rapports détaillés',
             'Support dédié'
-          ]
+          ],
+           variant: 'enterprise'
         }
       ];
     
@@ -86,7 +93,7 @@ const SubscriptionPlansRec = () => {
             ],
           });
         } catch (error) {
-          console.error('PayPal order creation failed:', error);
+          console.log('PayPal order creation failed:', error);
           throw error;
         }
       };

@@ -42,7 +42,7 @@ function Content() {
         
         </div>
     </div>
-      Content
+    
     </div>
   );
 }

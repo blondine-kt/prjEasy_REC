@@ -7,13 +7,14 @@ import Api from "../../context/Apicontext";
 import FloatingChatbot from "../Chat";
 import JobListings from "./JobPostings";
 import AbonnementContext from "../../context/abonnementContext";
+ 
 
 
 function CandidateDashBoard() {
   const{SOURCE} = useContext(Api)
-  const { user } = useAuth();
-  const { abonnement } = useContext(AbonnementContext)
- 
+  const { user, logout } = useAuth();
+  const { abonnement, setAbonnement } = useContext(AbonnementContext)
+ const navigate = useNavigate();
 
   const[visible, setVisible]= useState(false)
 
@@ -58,6 +59,14 @@ function CandidateDashBoard() {
   const handleButtonClick = () => {
     inputRef.current?.click();
   };
+  const handleLogout= ()=>{
+    setAbonnement(null)
+    logout({
+      ...null,
+      type:'candidate'
+    })
+    navigate('/')
+  }
 
   const handleVisible =() =>{
 
@@ -68,10 +77,14 @@ function CandidateDashBoard() {
 
   return (
     <div className={`${styles.dashboard_body} p-20 `}>
+     <div className="poppins-bold p-10 d-flex flex-row justify-content-between">
       <h1>Welcome to Candidate Dashboard</h1>
+      <button className={`${styles.btnDisconnect}`} onClick={handleLogout}>Deconnexion</button>
+      </div>
       <p>Hello, {user.name} {user.surname}!</p>
+
       {abonnement ? <div><p>Abonnement : {abonnement.forfait}</p>
-      <p>Duree : {abonnement.debut} - {abonnement.fin}</p></div>: 
+      <p>Validite : {abonnement.debut} - {abonnement.fin}</p></div>: 
       <div className="p-20"><SubscriptionPlans/></div>
       }
       <hr/>
@@ -105,11 +118,12 @@ function CandidateDashBoard() {
       <div>
        <JobListings />
       </div>
-      
-    
+     {abonnement &&
+     abonnement.forfait == 'Enterprise' ? 
       <div>
      <FloatingChatbot/>
      </div>
+     : <div></div>}
      
     </div>
      

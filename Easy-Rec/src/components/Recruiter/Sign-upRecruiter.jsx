@@ -132,7 +132,7 @@ function SignupRecruiter() {
           {loading ? "Creating Account..." : "Register"}
         </button>
         <div>
-          <NavLink to="/recruiter/login">Already have an account</NavLink>
+          <NavLink to="/recruiter/login" className={`${styles.hypertext}`}>Already have an account</NavLink>
         </div>
       </form>
     </div>
