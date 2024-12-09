@@ -14,10 +14,12 @@ const JobListings = () => {
   const { abonnement } = useContext(AbonnementContext)
 
   useEffect(() => {
-    
     let id = String(user.candidateId)
-    if(abonnement.forfait != 'Basic' && user){
-        SetUrl(`${SOURCE}/matching/${id}`)
+    if(abonnement && user){
+        if(abonnement.forfait != 'Basic'){
+            SetUrl(`${SOURCE}/matching/${id}`)
+        }
+       
     }else{
         SetUrl(`${SOURCE}/`)
     }
@@ -34,7 +36,7 @@ const JobListings = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading job offers...</p>;
+    return( <p>Loading job offers...</p>);
   }
 
   const handleToggle = (id) => {
@@ -42,11 +44,7 @@ const JobListings = () => {
   };
   console.log(jobOffers);
 
-  const handleApply = (jobId) => {
-    // Add your application logic here
-    console.log(`Applied for job ${jobId}`);
-  };
-  // Example of updating the component to use these styles
+  
   return (
     <div className={`${styles.job_listings_container}`}>
       <h1 className={`${styles.page_title}`}>Job Opportunities</h1>
@@ -66,15 +64,7 @@ const JobListings = () => {
                   </p>
                 </div>
                 <div className={`${styles.button_container}`}>
-                  {/* <button 
-                  className={`${styles.apply_button}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleApply(job.offre_id);
-                  }}
-                >
-                  Postuler
-                </button> */}
+                
                   <ApplyButton id={String(job.offre_id)} />
                 </div>
               </div>
