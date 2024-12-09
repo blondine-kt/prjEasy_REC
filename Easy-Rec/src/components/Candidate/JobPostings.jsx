@@ -8,21 +8,24 @@ const JobListings = () => {
   const [jobOffers, setJobOffers] = useState([]);
   const [loading, setLoading] = useState(true);
   const { SOURCE } = useContext(Api);
-  const [ url, SetUrl] = useState('')
+  const [ url, setUrl] = useState('')
   const [expandedId, setExpandedId] = useState(null);
   const { user } = useAuth()
   const { abonnement } = useContext(AbonnementContext)
 
   useEffect(() => {
-    let id = String(user.candidateId)
-    if(abonnement && user){
-        if(abonnement.forfait != 'Basic'){
-            SetUrl(`${SOURCE}/matching/${id}`)
-        }
-       
-    }else{
-        SetUrl(`${SOURCE}/`)
+    let id = String(user.candidateId);
+    if (abonnement && user) {
+      if (abonnement.forfait !== 'Basic') {
+        setUrl(`${SOURCE}/matching/${id}`);
+      } else {
+        setUrl(`${SOURCE}/`);
+      }
     }
+  }, [abonnement, user]); 
+
+  useEffect(() => {
+    
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
@@ -33,7 +36,8 @@ const JobListings = () => {
         console.log("Error fetching job offers:", error);
         setLoading(false); // Important to set loading to false even on error
       });
-  }, []);
+    
+  },[]);
 
   if (loading) {
     return( <p>Loading job offers...</p>);
@@ -42,7 +46,7 @@ const JobListings = () => {
   const handleToggle = (id) => {
     setExpandedId(expandedId === id ? null : id);
   };
-  console.log(jobOffers);
+  
 
   
   return (
